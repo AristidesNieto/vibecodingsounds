@@ -33,8 +33,8 @@ function audioFilesIn(dir) {
 
 export function listSounds(home) {
   return [
-    ...audioFilesIn(systemSoundsDir()).map((path) => ({ name: nameOf(path), path, source: "sistema" })),
-    ...audioFilesIn(customSoundsDir(home)).map((path) => ({ name: nameOf(path), path, source: "tuyo" })),
+    ...audioFilesIn(systemSoundsDir()).map((path) => ({ name: nameOf(path), path, source: "system" })),
+    ...audioFilesIn(customSoundsDir(home)).map((path) => ({ name: nameOf(path), path, source: "custom" })),
   ];
 }
 
@@ -49,16 +49,16 @@ export function resolveSound(input, home) {
   const match = listSounds(home).find((sound) => sound.name.toLowerCase() === wanted);
   if (match) return match.path;
 
-  throw new Error(`No encontré el sonido "${input}". Revisa con: vcsounds list`);
+  throw new Error(`Sound "${input}" not found. Check with: vcsounds list`);
 }
 
 export function importSound(file, dir) {
   const ext = extname(file).toLowerCase();
   if (!AUDIO_EXTENSIONS.includes(ext)) {
-    throw new Error(`Formato no soportado (${ext || "sin extensión"}). Usa: ${AUDIO_EXTENSIONS.join(", ")}`);
+    throw new Error(`Unsupported format (${ext || "no extension"}). Use: ${AUDIO_EXTENSIONS.join(", ")}`);
   }
   if (!existsSync(file)) {
-    throw new Error(`No existe el archivo: ${file}`);
+    throw new Error(`File not found: ${file}`);
   }
 
   mkdirSync(dir, { recursive: true });
@@ -69,5 +69,5 @@ export function importSound(file, dir) {
 
 // Keeps letters, digits, spaces, "-" and "_". Quotes and shell characters are dropped.
 export function safeName(name) {
-  return name.replace(/[^\p{L}\p{N} _-]/gu, "").trim() || "sonido";
+  return name.replace(/[^\p{L}\p{N} _-]/gu, "").trim() || "sound";
 }

@@ -1,12 +1,12 @@
 ---
-description: Cambia los sonidos de Claude Code (al terminar y al pedir permiso)
-argument-hint: [list | status | set <stop|notification> <sonido> | off | add <archivo> | preview <sonido>]
+description: Change Claude Code sounds (when it finishes and when it asks for permission)
+argument-hint: [list | status | set <stop|notification> <sound> | off | add <file> | preview <sound>]
 ---
 
-Ejecuta el CLI `vcsounds` con los argumentos del usuario: `vcsounds $ARGUMENTS`
+Run the `vcsounds` CLI with the user's arguments: `vcsounds $ARGUMENTS`
 
-Si el usuario no pasó argumentos, ejecuta `vcsounds help` y muéstrale las opciones.
+If the user passed no arguments, run `vcsounds help` and show them the options.
 
-Si el comando falla porque `vcsounds` no existe, dile que lo instale con `npm install -g vibecodingsounds` (requiere Node.js 18 o superior) y vuelve a intentarlo.
+If the command fails because `vcsounds` is not found, tell the user to install it with `npm install -g vibecodingsounds` (requires Node.js 18 or later), then try again.
 
-Resume el resultado en una o dos frases.
+Summarize the result in one or two sentences.

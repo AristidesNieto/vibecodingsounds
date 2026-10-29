@@ -1,6 +1,6 @@
 {
   "name": "vibecodingsounds",
-  "description": "Sonidos para Claude Code: al terminar y cuando pide permiso.",
+  "description": "Custom sounds for Claude Code: when it finishes and when it asks for permission.",
   "owner": {
     "name": "Aristides"
   },
@@ -8,7 +8,7 @@
     {
       "name": "vibecodingsounds",
       "source": "./plugin",
-      "description": "Comando /vcsounds para cambiar los sonidos de Claude Code. Requiere el CLI: npm install -g vibecodingsounds"
+      "description": "The /vcsounds command to change Claude Code sounds. Requires the CLI: npm install -g vibecodingsounds"
     }
   ]
 }

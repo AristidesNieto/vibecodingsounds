@@ -14,29 +14,29 @@ test("setEventSound keeps the user's hooks and unrelated keys", () => {
     },
   };
 
-  const after = setEventSound(before, "Stop", "/tmp/bip.wav");
+  const after = setEventSound(before, "Stop", "/tmp/beep.wav");
 
   assert.equal(after.model, "opus");
   assert.deepEqual(after.hooks.PreToolUse, before.hooks.PreToolUse);
   assert.equal(after.hooks.Stop.length, 2);
   assert.deepEqual(after.hooks.Stop[0], USER_STOP_HOOK);
-  assert.equal(getEventSound(after, "Stop"), "/tmp/bip.wav");
+  assert.equal(getEventSound(after, "Stop"), "/tmp/beep.wav");
 });
 
 test("setting the same sound twice does not duplicate the hook", () => {
-  let json = setEventSound({}, "Stop", "/tmp/bip.wav");
-  json = setEventSound(json, "Stop", "/tmp/bip.wav");
+  let json = setEventSound({}, "Stop", "/tmp/beep.wav");
+  json = setEventSound(json, "Stop", "/tmp/beep.wav");
   assert.equal(json.hooks.Stop.length, 1);
 });
 
 test("passing null removes only this app's hook", () => {
-  let json = setEventSound({ hooks: { Stop: [USER_STOP_HOOK] } }, "Stop", "/tmp/bip.wav");
+  let json = setEventSound({ hooks: { Stop: [USER_STOP_HOOK] } }, "Stop", "/tmp/beep.wav");
   json = setEventSound(json, "Stop", null);
   assert.deepEqual(json, { hooks: { Stop: [USER_STOP_HOOK] } });
 });
 
 test("removing the last hook removes the empty hooks object", () => {
-  let json = setEventSound({ model: "opus" }, "Notification", "/tmp/aviso.wav");
+  let json = setEventSound({ model: "opus" }, "Notification", "/tmp/alert.wav");
   json = setEventSound(json, "Notification", null);
   assert.deepEqual(json, { model: "opus" });
 });
@@ -64,7 +64,7 @@ test("soundPathFromCommand ignores hooks that are not ours", () => {
 });
 
 test("safeName drops quotes and shell characters", () => {
-  assert.equal(safeName('mi "sonido" $1!'), "mi sonido 1");
-  assert.equal(safeName("!!!"), "sonido");
-  assert.equal(safeName("Campanita_2-final"), "Campanita_2-final");
+  assert.equal(safeName('my "sound" $1!'), "my sound 1");
+  assert.equal(safeName("!!!"), "sound");
+  assert.equal(safeName("Chime_2-final"), "Chime_2-final");
 });

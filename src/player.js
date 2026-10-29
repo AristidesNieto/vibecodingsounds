@@ -5,7 +5,7 @@ import { extname } from "node:path";
 
 export function play(file) {
   if (!existsSync(file)) {
-    throw new Error(`No existe el archivo: ${file}`);
+    throw new Error(`File not found: ${file}`);
   }
 
   switch (platform()) {
@@ -14,7 +14,7 @@ export function play(file) {
 
     case "win32": {
       if (extname(file).toLowerCase() !== ".wav") {
-        throw new Error("En Windows por ahora solo se reproducen archivos .wav.");
+        throw new Error("On Windows, only .wav files can be played for now.");
       }
       const escaped = file.replace(/'/g, "''");
       return run("powershell", [
@@ -31,18 +31,18 @@ export function play(file) {
         checkStatus(cmd, result);
         return;
       }
-      throw new Error("No encontré un reproductor de audio. Instala pulseaudio-utils, pipewire o alsa-utils.");
+      throw new Error("No audio player found. Install pulseaudio-utils, pipewire or alsa-utils.");
   }
 }
 
 function run(cmd, args) {
   const result = spawnSync(cmd, args, { stdio: "ignore" });
-  if (result.error) throw new Error(`No pude ejecutar ${cmd}: ${result.error.message}`);
+  if (result.error) throw new Error(`Could not run ${cmd}: ${result.error.message}`);
   checkStatus(cmd, result);
 }
 
 function checkStatus(cmd, result) {
   if (result.status !== 0) {
-    throw new Error(`${cmd} terminó con error (código ${result.status})`);
+    throw new Error(`${cmd} failed (exit code ${result.status})`);
   }
 }

@@ -18,10 +18,10 @@ export function readSettings(file) {
   try {
     json = JSON.parse(text);
   } catch {
-    throw new Error(`${file} no es JSON válido. No lo modifiqué.`);
+    throw new Error(`${file} is not valid JSON. Not modified.`);
   }
   if (typeof json !== "object" || json === null || Array.isArray(json)) {
-    throw new Error(`${file} no es un objeto JSON. No lo modifiqué.`);
+    throw new Error(`${file} is not a JSON object. Not modified.`);
   }
   return json;
 }
@@ -35,7 +35,7 @@ export function writeSettings(file, json) {
 
 export function commandFor(soundPath) {
   if (/["$`]/.test(soundPath)) {
-    throw new Error(`La ruta tiene caracteres no permitidos (" $ \`): ${soundPath}`);
+    throw new Error(`Path contains disallowed characters (" $ \`): ${soundPath}`);
   }
   return `vcsounds play "${soundPath}" ${MARKER}`;
 }

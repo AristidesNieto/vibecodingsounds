@@ -37,12 +37,12 @@ function fakeCustomSound(home, name) {
 
 test("set, status and off round-trip with a custom sound", () => {
   const home = setup();
-  fakeCustomSound(home, "bip");
+  fakeCustomSound(home, "beep");
 
-  assert.equal(vcs(home, "set", "stop", "bip").code, 0);
-  assert.match(vcs(home, "status").out, /stop\s+bip/);
+  assert.equal(vcs(home, "set", "stop", "beep").code, 0);
+  assert.match(vcs(home, "status").out, /stop\s+beep/);
   const command = settingsOf(home).hooks.Stop[0].hooks[0].command;
-  assert.equal(command, `vcsounds play "${join(home, ".claude", "vibecodingsounds", "bip.wav")}" #vibecodingsounds`);
+  assert.equal(command, `vcsounds play "${join(home, ".claude", "vibecodingsounds", "beep.wav")}" #vibecodingsounds`);
 
   assert.equal(vcs(home, "off").code, 0);
   assert.equal(settingsOf(home).hooks, undefined);
@@ -50,13 +50,13 @@ test("set, status and off round-trip with a custom sound", () => {
 
 test("set keeps a user's existing Stop hook", () => {
   const home = setup();
-  fakeCustomSound(home, "bip");
+  fakeCustomSound(home, "beep");
   writeFileSync(
     join(home, ".claude", "settings.json"),
     JSON.stringify({ model: "opus", hooks: { Stop: [{ hooks: [{ type: "command", command: "./lint.sh" }] }] } }),
   );
 
-  assert.equal(vcs(home, "set", "stop", "bip").code, 0);
+  assert.equal(vcs(home, "set", "stop", "beep").code, 0);
 
   const json = settingsOf(home);
   assert.equal(json.model, "opus");
@@ -66,58 +66,58 @@ test("set keeps a user's existing Stop hook", () => {
 
 test("set refuses to touch a settings file that is not valid JSON", () => {
   const home = setup();
-  fakeCustomSound(home, "bip");
+  fakeCustomSound(home, "beep");
   const bad = "{ not json";
   writeFileSync(join(home, ".claude", "settings.json"), bad);
 
-  const result = vcs(home, "set", "stop", "bip");
+  const result = vcs(home, "set", "stop", "beep");
 
   assert.equal(result.code, 1);
-  assert.match(result.err, /no es JSON válido/);
+  assert.match(result.err, /is not valid JSON/);
   assert.equal(readFileSync(join(home, ".claude", "settings.json"), "utf8"), bad);
 });
 
 test("add copies an audio file into the custom sounds folder", () => {
   const home = setup();
-  const source = join(home, "mi bip.wav");
+  const source = join(home, "my beep.wav");
   writeFileSync(source, "RIFF");
 
   const result = vcs(home, "add", source);
 
   assert.equal(result.code, 0);
-  assert.ok(existsSync(join(home, ".claude", "vibecodingsounds", "mi bip.wav")));
-  assert.match(vcs(home, "list").out, /mi bip\s+tuyo/);
+  assert.ok(existsSync(join(home, ".claude", "vibecodingsounds", "my beep.wav")));
+  assert.match(vcs(home, "list").out, /my beep\s+custom/);
 });
 
 test("add rejects unsupported formats", () => {
   const home = setup();
-  const source = join(home, "notas.txt");
-  writeFileSync(source, "hola");
+  const source = join(home, "notes.txt");
+  writeFileSync(source, "hello");
 
   const result = vcs(home, "add", source);
 
   assert.equal(result.code, 1);
-  assert.match(result.err, /Formato no soportado/);
+  assert.match(result.err, /Unsupported format/);
 });
 
 test("unknown event and unknown sound give clear errors", () => {
   const home = setup();
 
-  const badEvent = vcs(home, "set", "saludo", "none");
+  const badEvent = vcs(home, "set", "greeting", "none");
   assert.equal(badEvent.code, 1);
-  assert.match(badEvent.err, /Evento desconocido/);
+  assert.match(badEvent.err, /Unknown event/);
 
-  const badSound = vcs(home, "set", "stop", "no-existe");
+  const badSound = vcs(home, "set", "stop", "does-not-exist");
   assert.equal(badSound.code, 1);
-  assert.match(badSound.err, /No encontré el sonido/);
+  assert.match(badSound.err, /not found/);
 });
 
 test("--project writes to .claude/settings.json in the current directory", () => {
   const home = setup();
   const project = mkdtempSync(join(tmpdir(), "vcs-project-"));
-  fakeCustomSound(home, "bip");
+  fakeCustomSound(home, "beep");
 
-  const result = spawnSync(process.execPath, [BIN, "--project", "set", "stop", "bip"], {
+  const result = spawnSync(process.execPath, [BIN, "--project", "set", "stop", "beep"], {
     env: { ...process.env, HOME: home, USERPROFILE: home },
     cwd: project,
     encoding: "utf8",

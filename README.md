@@ -1,92 +1,92 @@
 # VibeCodingSounds
 
-Sonidos personalizados para [Claude Code](https://docs.anthropic.com/en/docs/claude-code): suena cuando Claude termina una tarea y cuando te pide permiso o espera tu respuesta.
+Custom sounds for [Claude Code](https://docs.anthropic.com/en/docs/claude-code): play a sound when Claude finishes a task and when it asks for permission or waits for your input.
 
-> **Estado:** versión temprana (0.1.0). Probado en macOS. Windows y Linux están implementados pero aún no probados.
+> **Status:** early version (0.1.0). Tested on macOS. Windows and Linux are implemented but not yet tested.
 
-## Requisitos
+## Requirements
 
-- Node.js 18 o superior
+- Node.js 18 or later
 - Claude Code
 
-## Instalación
+## Installation
 
 ```sh
 npm install -g vibecodingsounds
 ```
 
-Eso instala el comando `vcsounds`.
+This installs the `vcsounds` command.
 
-Si además quieres el comando `/vcsounds` dentro de Claude Code, instala el plugin desde este repo:
+To also get the `/vcsounds` command inside Claude Code, install the plugin from this repo:
 
 ```
 /plugin marketplace add AristidesNieto/vibecodingsounds
 /plugin install vibecodingsounds --marketplace AristidesNieto/vibecodingsounds
 ```
 
-El plugin solo añade el comando `/vcsounds`. Sigue necesitando el CLI de arriba.
+The plugin only adds the `/vcsounds` command. It still needs the CLI above.
 
-## Uso
+## Usage
 
 ```sh
-vcsounds list                    # sonidos disponibles
-vcsounds status                  # qué suena en cada evento
-vcsounds set stop Glass          # sonido al terminar
-vcsounds set notification Tink   # sonido cuando pide permiso o espera
-vcsounds set stop none           # quitar un sonido
-vcsounds off                     # quitar todos
-vcsounds add ~/Music/bip.wav     # agregar tu propio audio
-vcsounds preview Glass           # escuchar un sonido
+vcsounds list                    # available sounds
+vcsounds status                  # which sound plays for each event
+vcsounds set stop Glass          # sound when Claude finishes
+vcsounds set notification Tink   # sound when Claude asks for permission or waits
+vcsounds set stop none           # remove a sound
+vcsounds off                     # remove all sounds
+vcsounds add ~/Music/beep.wav    # add your own audio file
+vcsounds preview Glass           # listen to a sound
 ```
 
-Para configurar un solo proyecto en vez de todo tu equipo, agrega `--project` desde su carpeta:
+To configure a single project instead of your whole machine, add `--project` from that project's folder:
 
 ```sh
-cd mi-proyecto
+cd my-project
 vcsounds --project set stop Glass
 ```
 
-### Eventos
+### Events
 
-| Evento | Cuándo suena |
+| Event | When it plays |
 |---|---|
-| `stop` | Claude termina de responder |
-| `notification` | Claude pide permiso o lleva un rato esperando tu respuesta |
+| `stop` | Claude finishes responding |
+| `notification` | Claude asks for permission or waits for your response for a while |
 
-## Sonidos propios
+## Custom sounds
 
-`vcsounds add` copia el archivo a `~/.claude/vibecodingsounds/`. Después puedes usarlo por su nombre, sin extensión.
+`vcsounds add` copies the file to `~/.claude/vibecodingsounds/`. You can then use it by its name, without the extension.
 
-Formatos: `.wav`, `.mp3`, `.m4a`, `.aiff`, `.caf`, `.ogg`, `.oga`.
+Supported formats: `.wav`, `.mp3`, `.m4a`, `.aiff`, `.caf`, `.ogg`, `.oga`.
 
-| Sistema | Reproductor usado | Formatos |
+| System | Player used | Formats |
 |---|---|---|
-| macOS | `afplay` (incluido) | todos los de arriba |
-| Windows | PowerShell (incluido) | solo `.wav` por ahora |
-| Linux | `paplay`, `pw-play` o `aplay` | depende del reproductor instalado |
+| macOS | `afplay` (built in) | all of the above |
+| Windows | PowerShell (built in) | `.wav` only for now |
+| Linux | `paplay`, `pw-play` or `aplay` | depends on the installed player |
 
-## Cómo funciona
+## How it works
 
-`vcsounds set` edita `~/.claude/settings.json` (o `.claude/settings.json` con `--project`) y agrega un hook que ejecuta `vcsounds play <archivo>`.
+`vcsounds set` edits `~/.claude/settings.json` (or `.claude/settings.json` with `--project`) and adds a hook that runs `vcsounds play <file>`.
 
-- Solo toca sus propios hooks. Los hooks que tú escribiste se conservan.
-- Si el archivo de configuración no es JSON válido, no lo modifica.
-- Cada comando termina en `#vibecodingsounds`. El shell lo trata como comentario, y así la herramienta reconoce sus propios hooks al cambiarlos.
+- It only touches its own hooks. Hooks you wrote yourself are kept.
+- If the settings file is not valid JSON, it is not modified.
+- Every command ends with `#vibecodingsounds`. The shell treats it as a comment, which is how the tool recognizes its own hooks when it changes them.
 
-## Desinstalar
+## Uninstall
 
 ```sh
 vcsounds off
 npm uninstall -g vibecodingsounds
 ```
 
-Ejecuta `vcsounds off` antes de desinstalar. Si no, los hooks seguirán intentando ejecutar un comando que ya no existe.
+Run `vcsounds off` before uninstalling. Otherwise the hooks will keep trying to run a command that no longer exists.
 
-## Privacidad
+## Privacy
 
-No hay red, ni analytics, ni cuentas. Todo se queda en tu equipo.
+No network access, no analytics, no accounts. Everything stays on your machine.
 
-## Desarrollo
+## Development
 
 ```sh
 git clone https://github.com/AristidesNieto/vibecodingsounds
@@ -94,6 +94,6 @@ cd vibecodingsounds
 npm test
 ```
 
-## Licencia
+## License
 
 MIT

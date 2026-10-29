@@ -1,7 +1,7 @@
 {
   "name": "vibecodingsounds",
   "version": "0.1.0",
-  "description": "Sonidos personalizados para Claude Code: al terminar y cuando pide permiso.",
+  "description": "Custom sounds for Claude Code: when it finishes and when it asks for permission.",
   "type": "module",
   "bin": {
     "vcsounds": "bin/vcsounds.js"
