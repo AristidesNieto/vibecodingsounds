@@ -1,0 +1,12 @@
+{
+  "name": "vibecodingsounds",
+  "version": "0.1.0",
+  "description": "Sonidos para Claude Code: al terminar y cuando pide permiso.",
+  "author": {
+    "name": "Aristides"
+  },
+  "homepage": "https://github.com/TU_USUARIO/vibecodingsounds",
+  "repository": "https://github.com/TU_USUARIO/vibecodingsounds",
+  "license": "MIT",
+  "keywords": ["sounds", "hooks", "vibe-coding"]
+}

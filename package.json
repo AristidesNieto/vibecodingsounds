@@ -1,0 +1,26 @@
+{
+  "name": "vibecodingsounds",
+  "version": "0.1.0",
+  "description": "Sonidos personalizados para Claude Code: al terminar y cuando pide permiso.",
+  "type": "module",
+  "bin": {
+    "vcsounds": "bin/vcsounds.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude-code",
+    "sounds",
+    "vibe-coding",
+    "hooks"
+  ],
+  "license": "MIT"
+}
