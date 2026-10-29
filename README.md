@@ -20,8 +20,8 @@ Eso instala el comando `vcsounds`.
 Si además quieres el comando `/vcsounds` dentro de Claude Code, instala el plugin desde este repo:
 
 ```
-/plugin marketplace add TU_USUARIO/vibecodingsounds
-/plugin install vibecodingsounds --marketplace TU_USUARIO/vibecodingsounds
+/plugin marketplace add AristidesNieto/vibecodingsounds
+/plugin install vibecodingsounds --marketplace AristidesNieto/vibecodingsounds
 ```
 
 El plugin solo añade el comando `/vcsounds`. Sigue necesitando el CLI de arriba.
@@ -89,7 +89,7 @@ No hay red, ni analytics, ni cuentas. Todo se queda en tu equipo.
 ## Desarrollo
 
 ```sh
-git clone https://github.com/TU_USUARIO/vibecodingsounds
+git clone https://github.com/AristidesNieto/vibecodingsounds
 cd vibecodingsounds
 npm test
 ```
